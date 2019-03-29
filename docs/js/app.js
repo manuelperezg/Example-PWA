@@ -1,7 +1,7 @@
 // registrar el service worker
 if (navigator.serviceWorker) {
 	//registrar el service
-	navigator.serviceWorker.register('/sw-basico.js');
+	navigator.serviceWorker.register('/sw.js');
 }
 
 /*if (window.caches) {
