@@ -10,7 +10,7 @@ self.addEventListener('fetch', event =>{
 	}*/
 	
 	//Pasar todo por el Service Worker 
-	// event.respondWith( fetch( event.request ) );
+	event.respondWith( fetch( event.request ) );
 	
 	// console.log(event.request.url.includes('.png'));
 	/*if (event.request.url.includes('.png')) {
@@ -45,16 +45,16 @@ self.addEventListener('fetch', event =>{
 	//----------regresar algo si estás offline---------
 	
 	// const offlineResp = fetch('pages/offlinepage.html');
-	const  offlineResp = new Response (`
+	/*const  offlineResp = new Response (`
 			<p> Bienvenido a mi página web
-				Discule pero para usarla necesitas internet...</p>
+				Disculpe pero para usarla necesitas internet...</p>
 			`,{
 				headers:{
 				'Content-Type':'text/html; charset=UTF-8'
 				}
 			});
 	const res = fetch(event.request).catch( () => offlineResp);
-	event.respondWith ( res );
+	event.respondWith ( res );*/
 
 
 	// console.log(event.request.url);
@@ -62,4 +62,45 @@ self.addEventListener('fetch', event =>{
 
 	//todos nuestras peticiones get de la web
 	// console.log(event);
+
+
 });
+
+//evento push
+self.addEventListener('push', e =>{
+	console.log('Evento: push');
+
+	let titulo = 'Push Notification Demo',
+		options = {
+			body: 'Click para regresar a la aplicacion',
+			icon: './images/icons/icono_h2.png',
+			vibrate: [100,50,100],
+			data: { id:1 },
+			actions: [
+				{'action':'Simon','title': 'Adoro mi app c: ',icon:
+				'./images/icons/icono_h2.png'},
+				{'action':'Nel Pastel','title': 'Ta fea c: ',icon:
+				'./images/icons/icono_h2.png'}
+			]
+		}
+
+		e.waitUntil( self.registration.showNotification(titulo,options) );
+});
+
+self.addEventListener('sync',e =>{
+	console.log('Evento Sincronizacion de fondo',e)
+
+	//Revisar que la etiqueta de sincronizacion sea la que definimos en la app.js
+	if (e.tag === 'github' || e.tag ==='test-tag-from-devtools'){
+		e.waitUntil(
+			//comprobar las pestañas abiertas en navegadpr
+			self.clients.matchAll()
+			.then(all =>{
+				return all.map(client =>{
+					return client.postMessage('online')
+				})
+			})
+			.catch( err => console.log(err))
+			)
+	}
+})
