@@ -10,7 +10,7 @@
  	if ('serviceWorker' in n) {
  		// Resgistro del Service Worker
  		w.addEventListener('load', () => {
- 			n.serviceWorker.register('../sw.js')
+ 			n.serviceWorker.register('./sw.js')
  			.then( registro => {
  				// console.log(registro);
  				c(
