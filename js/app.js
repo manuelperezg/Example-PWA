@@ -46,10 +46,10 @@
  	if ( w.Notification && Notification.permission !== 'denied') {
  		Notification.requestPermission(status => {
  			console.log(status);
- 			/*let n = new Notification('Título',{
- 				body: 'Soy una notificacion',
+ 			let n = new Notification('Bienvenido a ITTEC',{
+ 				body: 'Nuestra página se encuentra en Construcción actualmente',
  				icon: './images/icons/icono_h2.png'
- 			});*/
+ 			});
  		});
  	}
 
@@ -87,7 +87,7 @@
   			metaTagTheme.setAttribute('content','#0aa458');
   			alert('Conexion restablecida');
   		}else{
-  			metaTagTheme.setAttribute('content','#666');
+  			metaTagTheme.setAttribute('content','#a52100 ');
   			alert('Conexion perdida')
   		}
   	}
